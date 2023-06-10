@@ -1,0 +1,12 @@
+@import '../borders/borders';
+
+@mixin first-todo($theme) {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  @if $theme == 'light' {
+    border-bottom: $border-light;
+  } @else {
+    border-bottom: $border-dark;
+  }
+}

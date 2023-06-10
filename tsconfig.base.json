@@ -14,7 +14,48 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@shared/domain": ["libs/shared/domain/src/index.ts"],
+      "@shared/styles": ["libs/shared/styles/src/index.ts"],
+      "@todo-react/auth-feature": ["libs/todo-react/auth/feature/src/index.ts"],
+      "@todo-react/auth-feature-login": [
+        "libs/todo-react/auth/feature-login/src/index.ts"
+      ],
+      "@todo-react/auth-feature-sign-up": [
+        "libs/todo-react/auth/feature-sign-up/src/index.ts"
+      ],
+      "@todo-react/feature-todo-list": [
+        "libs/todo-react/todo/feature-todo-list/src/index.ts"
+      ],
+      "@todo-react/shared-domain": [
+        "libs/todo-react/shared/domain/src/index.ts"
+      ],
+      "@todo-react/shared-feature-header": [
+        "libs/todo-react/shared/feature-header/src/index.ts"
+      ],
+      "@todo-react/shared-store": ["libs/todo-react/shared/store/src/index.ts"],
+      "@todo-react/shared-ui-button": [
+        "libs/todo-react/shared/ui-button/src/index.ts"
+      ],
+      "@todo-react/shared-ui-form-input": [
+        "libs/todo-react/shared/ui-form-input/src/index.ts"
+      ],
+      "@todo-react/shell": ["libs/todo-react/shell/src/index.ts"],
+      "@todo-react/todo-feature": ["libs/todo-react/todo/feature/src/index.ts"],
+      "@todo-react/ui-checkbox": [
+        "libs/todo-react/todo/ui-checkbox/src/index.ts"
+      ],
+      "@todo-react/ui-filter-bar": [
+        "libs/todo-react/todo/ui-filter-bar/src/index.ts"
+      ],
+      "@todo-react/ui-todo-input": [
+        "libs/todo-react/todo/ui-todo-input/src/index.ts"
+      ],
+      "@todo-react/ui-todo-item": [
+        "libs/todo-react/todo/ui-todo-item/src/index.ts"
+      ],
+      "todo-api/todo": ["libs/todo-server/todo-api/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

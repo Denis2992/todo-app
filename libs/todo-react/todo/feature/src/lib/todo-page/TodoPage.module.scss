@@ -1,0 +1,55 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.todo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &-content {
+    margin: 2.5rem 1.5rem 0;
+    width: 100%;
+    max-width: $content-width-mobile;
+
+    @include breakpoint-up('tablet') {
+      margin-top: 3rem;
+      max-width: $content-width-desktop;
+
+      &__filter-container {
+        display: none;
+      }
+    }
+  }
+
+  &-list {
+    display: flex;
+    flex-direction: column;
+
+    &__info-tip {
+      font-size: 0.875rem;
+      color: $text-grey;
+      margin-top: 2.5rem;
+      align-self: center;
+    }
+
+    &__no-items {
+      margin-top: 4rem;
+      text-align: center;
+
+      @include breakpoint-up('tablet') {
+        margin-top: 6rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    &__info-tip,
+    &__no-items {
+      &--light {
+        color: $text-grey;
+      }
+
+      &--dark {
+        color: $text-dark;
+      }
+    }
+  }
+}

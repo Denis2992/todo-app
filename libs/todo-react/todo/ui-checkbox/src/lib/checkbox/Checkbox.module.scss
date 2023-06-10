@@ -1,0 +1,48 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.checkbox {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s ease;
+
+  @include breakpoint-up('tablet') {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &--checked {
+    background: $bg-gradient;
+  }
+
+  &--unchecked {
+    &-light {
+      &:hover {
+        border: 1px solid transparent;
+        background: linear-gradient($color-white 0 0) padding-box,
+          $bg-gradient border-box;
+      }
+    }
+
+    &-dark {
+      &:hover {
+        border: 1px solid transparent;
+        background: linear-gradient($color-dark 0 0) padding-box,
+          $bg-gradient border-box;
+      }
+    }
+  }
+
+  &--light {
+    border: $border-light;
+  }
+
+  &--dark {
+    border: $border-dark;
+  }
+}

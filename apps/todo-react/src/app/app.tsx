@@ -1,14 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
-
-import NxWelcome from './nx-welcome';
+import { TodoApp } from '@todo-react/shell';
 
 export function App() {
-  return (
-    <div>
-      <NxWelcome title="todo-react" />
-    </div>
-  );
+  return <TodoApp></TodoApp>;
 }
 
 export default App;

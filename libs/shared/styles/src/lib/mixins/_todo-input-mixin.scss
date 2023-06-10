@@ -1,0 +1,17 @@
+@import '../colors/variables';
+
+@mixin todo-input($theme) {
+  @if $theme == 'light' {
+    color: $text-grey;
+
+    &:focus {
+      color: $color-dark;
+    }
+  } @else {
+    color: $color-dark-grey;
+
+    &:focus {
+      color: $text-light-grey;
+    }
+  }
+}

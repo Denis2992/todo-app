@@ -1,0 +1,111 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.todo-item {
+  height: $todo-item-height-mobile;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  padding: 0 1.25rem;
+
+  @include breakpoint-up('tablet') {
+    height: $todo-item-height-desktop;
+    padding: 0 1.5rem;
+  }
+
+  &--light {
+    @include bg-color('light');
+
+    &-first {
+      @include first-todo('light');
+    }
+
+    &-middle {
+      border-bottom: $border-light;
+    }
+  }
+
+  &--dark {
+    @include bg-color('dark');
+
+    &-first {
+      @include first-todo('dark');
+    }
+
+    &-middle {
+      border-bottom: $border-dark;
+    }
+  }
+
+  &--dragging {
+    transform: scale(1.05);
+  }
+
+  &-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &-drag-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+
+    &--dragging {
+      cursor: grabbing;
+    }
+
+    &__title {
+      margin-left: 0.75rem;
+      font-size: 0.75rem;
+
+      @include breakpoint-up('tablet') {
+        font-size: 1.125rem;
+      }
+
+      &--light {
+        color: $color-dark;
+
+        &-disabled {
+          text-decoration-line: line-through;
+          color: $color-disabled-light;
+        }
+      }
+
+      &--dark {
+        color: $text-light-grey;
+
+        &-disabled {
+          text-decoration-line: line-through;
+          color: $color-disabled-dark;
+        }
+      }
+    }
+  }
+
+  &__delete-btn {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: none;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+
+    @include breakpoint-up('tablet') {
+      width: 1.125rem;
+      height: 1.125rem;
+    }
+
+    img {
+      width: 1em;
+      height: 1em;
+    }
+  }
+}

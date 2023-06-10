@@ -1,0 +1,48 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.login {
+  width: 100%;
+  max-width: $content-width-mobile;
+  margin: 0 1.5rem;
+
+  &__title {
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &-sign-up {
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    display: flex;
+
+    &__message {
+      margin-right: 0.75rem;
+    }
+
+    &__link {
+      text-decoration: none;
+      color: $text-active;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__title,
+  &-sign-up__message {
+    &--light {
+      color: $text-dark;
+    }
+
+    &--dark {
+      color: $text-light-grey;
+    }
+  }
+}

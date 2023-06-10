@@ -1,0 +1,22 @@
+@import './breakpoint-mixin';
+@import '../colors/variables';
+
+@mixin background-app($theme) {
+  transition: all 0.5s ease;
+
+  @if $theme == 'light' {
+    background: url('/apps/todo-react/src/assets/bg-light.jpg'), $bg-light;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: auto $bg-height-mobile;
+  } @else {
+    background: url('/apps/todo-react/src/assets/bg-dark.jpg'), $bg-dark;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: auto $bg-height-mobile;
+  }
+
+  @include breakpoint-up('tablet') {
+    background-size: auto $bg-height-desktop;
+  }
+}

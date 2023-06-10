@@ -1,0 +1,23 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.cta {
+  font-family: $font-primary;
+  font-size: 0.875rem;
+  padding: 0.5rem 3rem;
+  border-radius: 15px;
+  border: 1px solid;
+  transition: all 0.5s ease;
+
+  &--light {
+    border-color: $color-disabled-light;
+    background-color: $color-white;
+    box-shadow: $input-shadow;
+    color: $text-dark;
+  }
+
+  &--dark {
+    border-color: $color-disabled-dark;
+    background-color: $color-dark;
+    color: $text-light-grey;
+  }
+}

@@ -1,0 +1,42 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: $content-width-mobile;
+    margin: 0 1.5rem;
+
+    &__logo {
+      height: $icon-size-mobile;
+    }
+
+    &-menu {
+      &__icon {
+        height: $icon-size-mobile;
+        width: $icon-size-mobile;
+        margin-left: 0.75rem;
+      }
+    }
+
+    @include breakpoint-up('tablet') {
+      max-width: $content-width-desktop;
+
+      &__logo {
+        height: $icon-size-desktop;
+      }
+
+      &-menu {
+        &__icon {
+          height: $icon-size-desktop;
+          width: $icon-size-desktop;
+        }
+      }
+    }
+  }
+}
