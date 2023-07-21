@@ -1,0 +1,18 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.user-message {
+  margin-top: 1rem;
+
+  &__content {
+    text-align: center;
+    font-size: 0.875rem;
+
+    &--error {
+      color: $color-error;
+    }
+
+    &--success {
+      color: $color-success;
+    }
+  }
+}

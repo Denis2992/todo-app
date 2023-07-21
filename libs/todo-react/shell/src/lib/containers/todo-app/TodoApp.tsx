@@ -1,8 +1,11 @@
-import { ThemeProvider } from '@todo-react/shared-store';
-import TodoMain from '../../components/todo-main/TodoMain';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { TodoPage } from '@todo-react/todo-feature';
-import { LoginPage, SignUpPage } from '@todo-react/auth-feature';
+
+import TodoMain from '../../components/todo-main/TodoMain';
+import { AuthProvider, ThemeProvider } from '@todo-react/shared/store';
+import { TodoPage } from '@todo-react/todo/feature';
+import { LoginForm } from '@todo-react/auth/feature-login';
+import { SignUpForm } from '@todo-react/auth/feature-sign-up';
+import { AuthPage } from '@todo-react/auth/feature';
 
 const routes = createBrowserRouter([
   {
@@ -15,13 +18,12 @@ const routes = createBrowserRouter([
       },
       {
         path: 'login',
-        element: <LoginPage />,
+        element: <AuthPage children={<LoginForm />} />,
       },
       {
         path: 'sign-up',
-        element: <SignUpPage />,
+        element: <AuthPage children={<SignUpForm />} />,
       },
-
       {
         path: '*',
         element: <p>Page not found</p>,
@@ -33,7 +35,9 @@ const routes = createBrowserRouter([
 export function TodoApp() {
   return (
     <ThemeProvider>
-      <RouterProvider router={routes} />
+      <AuthProvider>
+        <RouterProvider router={routes} />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

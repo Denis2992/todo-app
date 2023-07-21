@@ -1,14 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
-import styles from './FormInput.module.scss';
-import { ThemeType } from '@todo-react/shared-domain';
-import { ThemeContext } from '@todo-react/shared-store';
+import { useEffect, useState } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import classNames from 'classnames';
 
-/* eslint-disable-next-line */
+import styles from './FormInput.module.scss';
+import { ThemeType } from '@todo-react/shared/domain';
+
 export interface FormInputProps {
-  type: 'email' | 'password' | 'text';
+  type: 'password' | 'text';
   name: string;
   label: string;
   theme: ThemeType;
+  register: UseFormRegisterReturn<string>;
   errorMessage?: string;
 }
 
@@ -26,13 +28,14 @@ export function FormInput(props: FormInputProps) {
     if (showToggleButton) {
       return (
         <div
-          className={`${styles['form-input-show-password']} ${
+          className={classNames(
+            styles['form-input-show-password'],
             styles[`form-input-show-password--${props.theme}`]
-          }`}
+          )}
         >
           <img
             className={styles['form-input-show-password__icon']}
-            src={`../assets/${showPassword ? 'hide' : 'view'}-icon.png`}
+            src={`../assets/${showPassword ? 'view' : 'hide'}-icon.png`}
             alt="show-password-icon"
             onClick={() => setShowPassword(!showPassword)}
           ></img>
@@ -42,28 +45,30 @@ export function FormInput(props: FormInputProps) {
   };
 
   return (
-    <div className={`${styles['form-input']}  ${styles['field']}`}>
+    <div className={classNames(styles['form-input'], styles['field'])}>
       <input
         type={showPassword ? 'text' : props.type}
-        className={`${styles['form-input__field']} ${
+        autoComplete="on"
+        className={classNames(
+          styles['form-input__field'],
           styles[`form-input__field--${props.theme}`]
-        }`}
+        )}
         placeholder={props.label}
-        name={props.name}
         id={props.name}
-        required
+        {...props.register}
       />
       {showPasswordIcon()}
       <label
         htmlFor="name"
-        className={`${styles['form-input__label']} ${
+        className={classNames(
+          styles['form-input__label'],
           styles[`form-input__label--${props.theme}`]
-        }`}
+        )}
       >
         {props.label}
       </label>
       {props.errorMessage && (
-        <p className={styles['form-input__message']}>Text info</p>
+        <p className={styles['form-input__message']}>{props.errorMessage}</p>
       )}
     </div>
   );

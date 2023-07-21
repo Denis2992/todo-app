@@ -1,25 +1,44 @@
 import useBreakpoint from 'use-breakpoint';
-import { MouseEventHandler, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 
 import styles from './TodoPage.module.scss';
-import { BREAKPOINTS } from '@todo-react/shared-domain';
-import { ThemeContext } from '@todo-react/shared-store';
-import { TodoList } from '@todo-react/feature-todo-list';
-import { TodoInput } from '@todo-react/ui-todo-input';
-import { FilterBar } from '@todo-react/ui-filter-bar';
-import { FilterType, Todo } from '@shared/domain';
+import { BREAKPOINTS } from '@todo-react/shared/domain';
+import { AuthContext, ThemeContext } from '@todo-react/shared/store';
+import { TodoList } from '@todo-react/todo/feature-todo-list';
+import { TodoInput } from '@todo-react/todo/ui-todo-input';
+import { FilterBar } from '@todo-react/todo/ui-filter-bar';
+import { FilterType, Todo } from '@todo-app/shared/domain';
+import {
+  addTodo,
+  deleteComplitedTodos,
+  deleteTodo,
+  getTodos,
+  updateTodo,
+} from '@todo-react/todo/data-access';
 import classNames from 'classnames';
+import { UserMessage } from '@todo-react/shared/ui-user-message';
 
 export function TodoPage() {
   const { theme } = useContext(ThemeContext);
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
-  const [todos, setTodos] = useState<Todo[]>([
-    { title: '11111', checked: false, id: 'asdqwe1' },
-    { title: '22222', checked: true, id: 'dfgre4kkj' },
-    { title: '33333', checked: false, id: 'sdfer4hgf' },
-  ]);
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>(FilterType.ALL);
+  const { isAuth, token } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuth) {
+      getTodos(token)
+        .then((res) => {
+          setTodos(res.todos);
+        })
+        .catch((err) => {
+          setErrorMessage(err.message);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   const isMobile = (): boolean => {
     return breakpoint === 'mobile';
@@ -37,16 +56,17 @@ export function TodoPage() {
   };
 
   const onItemAdd = (todo: string) => {
-    setTodos((prevState) => {
-      return [
-        ...prevState,
-        {
-          id: new Date().toString(),
-          checked: false,
-          title: todo,
-        },
-      ];
-    });
+    if (isAuth) {
+      addTodo(todo, token)
+        .then((resData) => {
+          setTodos((prevState) => [...prevState, resData.todo]);
+        })
+        .catch((err) => {
+          setErrorMessage(err.message);
+        });
+    } else {
+      setErrorMessage("Can't add a todo when you are not logged in.");
+    }
   };
 
   const handleDragEnd = (activeIndex: number, overIndex: number) => {
@@ -54,21 +74,34 @@ export function TodoPage() {
   };
 
   const onCheckboxClick = (id: string) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            checked: !todo.checked,
-          };
-        }
-        return todo;
+    updateTodo(id, token)
+      .then(() => {
+        setTodos((prevTodos) =>
+          prevTodos.map((todo) =>
+            todo.id === id
+              ? {
+                  ...todo,
+                  checked: !todo.checked,
+                }
+              : todo
+          )
+        );
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
       });
-    });
   };
 
   const onItemDelete = (id: string) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    deleteTodo(id, token)
+      .then((resData) => {
+        setTodos((prevState) =>
+          prevState.filter((todo) => todo.id !== resData.todoId)
+        );
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+      });
   };
 
   const onFilterChange = (activeFilter: FilterType) => {
@@ -76,14 +109,22 @@ export function TodoPage() {
   };
 
   const onClearCompletedTodos = () => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.checked !== true));
+    deleteComplitedTodos(token)
+      .then(() => {
+        setTodos((prevTodos) =>
+          prevTodos.filter((todo) => todo.checked !== true)
+        );
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+      });
   };
 
   return (
     <div className={styles.todo}>
       <div className={styles['todo-content']}>
         <TodoInput itemAdded={onItemAdd}></TodoInput>
-        {todos.length ? (
+        {todos.length > 0 ? (
           <div className={styles['todo-list']}>
             <TodoList
               isMobile={isMobile()}
@@ -121,6 +162,12 @@ export function TodoPage() {
           >
             There is no todo yet
           </p>
+        )}
+
+        {errorMessage && (
+          <UserMessage color="error" onTimerEnd={() => setErrorMessage(null)}>
+            {errorMessage}
+          </UserMessage>
         )}
       </div>
     </div>

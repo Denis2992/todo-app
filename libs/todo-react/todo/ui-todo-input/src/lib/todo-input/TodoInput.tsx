@@ -4,15 +4,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import styles from './TodoInput.module.scss';
-import { ThemeContext } from '@todo-react/shared-store';
+import { ThemeContext } from '@todo-react/shared/store';
 import classNames from 'classnames';
 
 const schema = yup.object({
-  newTodo: yup.string().min(6, 'todo must be at least 6 characters'),
+  newTodo: yup
+    .string()
+    .min(6, 'todo title must be at least 6 characters')
+    .required(),
 });
 type FormData = yup.InferType<typeof schema>;
 
-/* eslint-disable-next-line */
 export interface TodoInputProps {
   itemAdded: (todo: string) => void;
 }
@@ -29,7 +31,6 @@ export function TodoInput(props: TodoInputProps) {
   });
 
   const submitTodo = (form: FormData) => {
-    console.log(form.newTodo);
     if (form.newTodo) {
       props.itemAdded(form.newTodo);
       reset();

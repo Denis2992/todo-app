@@ -1,2 +1,1 @@
-export * from './lib/containers/login-page/LoginPage';
-export * from './lib/containers//sign-up-page/SignUpPage';
+export * from './lib/containers/auth-page/AuthPage';

@@ -1,4 +1,4 @@
-import { ThemeType } from '@todo-react/shared-domain';
+import { ThemeType } from '@todo-react/shared/domain';
 import styles from './Button.module.scss';
 
 export interface ButtonProps {

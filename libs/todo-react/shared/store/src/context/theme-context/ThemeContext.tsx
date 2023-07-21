@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
-import { ThemeType } from '@todo-react/shared-domain';
+import { ThemeType } from '@todo-react/shared/domain';
 
 export type ThemeContextType = {
   theme: ThemeType;
@@ -13,11 +13,11 @@ export const ThemeContext = createContext<ThemeContextType>({
   changeTheme: () => {},
 });
 
-export interface ThemeContextProps {
+export interface ThemeProviderProps {
   children: JSX.Element;
 }
 
-export function ThemeProvider(props: ThemeContextProps) {
+export function ThemeProvider(props: ThemeProviderProps) {
   const [theme, setTheme] = useState<ThemeType>(ThemeType.LIGHT);
 
   const changeTheme = () => {
