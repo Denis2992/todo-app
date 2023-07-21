@@ -17,6 +17,13 @@ header {
     }
 
     &-menu {
+      display: flex;
+      align-items: center;
+
+      &__welcome {
+        color: $color-white;
+      }
+
       &__icon {
         height: $icon-size-mobile;
         width: $icon-size-mobile;

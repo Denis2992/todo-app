@@ -1,14 +1,16 @@
 import { useContext } from 'react';
 
 import styles from './HeaderComponent.module.scss';
-import { ThemeContext, ThemeContextType } from '@todo-react/shared-store';
+import {
+  AuthContext,
+  ThemeContext,
+  ThemeContextType,
+} from '@todo-react/shared/store';
 import { Link } from 'react-router-dom';
 
-/* eslint-disable-next-line */
-export interface HeaderProps {}
-
-export function HeaderComponent(props: HeaderProps) {
+export function HeaderComponent() {
   const { theme, changeTheme } = useContext(ThemeContext) as ThemeContextType;
+  const { isAuth, userName, clearUser } = useContext(AuthContext);
   const iconPath = theme === 'light' ? 'moon' : 'sun';
 
   const handleChangeTheme = () => {
@@ -27,13 +29,27 @@ export function HeaderComponent(props: HeaderProps) {
         </Link>
 
         <div className={styles['header-container-menu']}>
-          <Link to="/login">
-            <img
-              className={styles['header-container-menu__icon']}
-              src="../assets/login-icon.png"
-              alt="login"
-            />
-          </Link>
+          {isAuth ? (
+            <>
+              <p className={styles['header-container-menu__welcome']}>
+                Welcome, {userName}!
+              </p>
+              <img
+                className={styles['header-container-menu__icon']}
+                src="../assets/logout-icon.png"
+                alt="logout"
+                onClick={clearUser}
+              />
+            </>
+          ) : (
+            <Link to="/login">
+              <img
+                className={styles['header-container-menu__icon']}
+                src="../assets/login-icon.png"
+                alt="login"
+              />
+            </Link>
+          )}
 
           <img
             className={styles['header-container-menu__icon']}

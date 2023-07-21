@@ -15,34 +15,38 @@
     flex-direction: column;
     align-items: center;
   }
+}
 
-  &-sign-up {
-    margin-top: 2rem;
-    font-size: 0.875rem;
+.user-message {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+
+  &__sign-up {
     display: flex;
-
-    &__message {
-      margin-right: 0.75rem;
-    }
-
-    &__link {
-      text-decoration: none;
-      color: $text-active;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+    justify-content: center;
+    padding: 1rem 0.75rem 1rem 0.25rem;
   }
 
-  &__title,
-  &-sign-up__message {
-    &--light {
-      color: $text-dark;
-    }
+  &__link {
+    text-decoration: none;
+    color: $text-active;
+    margin-left: 0.75rem;
 
-    &--dark {
-      color: $text-light-grey;
+    &:hover {
+      text-decoration: underline;
     }
+  }
+}
+
+.login_title,
+.user-message__sign-up {
+  &--light {
+    color: $text-dark;
+  }
+
+  &--dark {
+    color: $text-light-grey;
   }
 }

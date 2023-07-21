@@ -4,9 +4,9 @@ import { CSS } from '@dnd-kit/utilities';
 import classNames from 'classnames';
 
 import styles from './TodoItem.module.scss';
-import { Todo } from '@shared/domain';
-import { ThemeContext } from '@todo-react/shared-store';
-import { Checkbox } from '@todo-react/ui-checkbox';
+import { Todo } from '@todo-app/shared/domain';
+import { ThemeContext } from '@todo-react/shared/store';
+import { Checkbox } from '@todo-react/todo/ui-checkbox';
 
 export interface TodoItemProps {
   todo: Todo;

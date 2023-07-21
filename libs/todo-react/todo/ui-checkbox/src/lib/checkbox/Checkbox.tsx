@@ -1,6 +1,6 @@
 import { MouseEvent, useContext } from 'react';
 import styles from './Checkbox.module.scss';
-import { ThemeContext } from '@todo-react/shared-store';
+import { ThemeContext } from '@todo-react/shared/store';
 import classNames from 'classnames';
 
 export interface CheckboxProps {
