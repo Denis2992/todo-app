@@ -1,1 +1,1 @@
-export * from './lib/auth-data-access';
+export * from './lib/api/auth-data-access';

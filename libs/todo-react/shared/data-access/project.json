@@ -1,22 +1,24 @@
 {
-  "name": "todo-react-shared-util",
+  "name": "todo-react-shared-data-access",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/todo-react/shared/util/src",
+  "sourceRoot": "libs/todo-react/shared/data-access/src",
   "projectType": "library",
-  "tags": ["scope:"],
+  "tags": ["type:"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/todo-react/shared/util/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": [
+          "libs/todo-react/shared/data-access/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/todo-react/shared/util/jest.config.ts",
+        "jestConfig": "libs/todo-react/shared/data-access/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 import styles from './TodoItem.module.scss';
 import { Todo } from '@todo-app/shared/domain';
-import { ThemeContext } from '@todo-react/shared/store';
 import { Checkbox } from '@todo-react/todo/ui-checkbox';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 export interface TodoItemProps {
   todo: Todo;

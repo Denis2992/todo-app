@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 
 import styles from './HeaderComponent.module.scss';
+import { Link } from 'react-router-dom';
 import {
   AuthContext,
   ThemeContext,
   ThemeContextType,
-} from '@todo-react/shared/store';
-import { Link } from 'react-router-dom';
+} from '@todo-react/shared/data-access';
 
 export function HeaderComponent() {
   const { theme, changeTheme } = useContext(ThemeContext) as ThemeContextType;

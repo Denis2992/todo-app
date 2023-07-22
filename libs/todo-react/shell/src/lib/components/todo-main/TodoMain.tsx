@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import styles from './TodoMain.module.scss';
-import { AuthContext, ThemeContext } from '@todo-react/shared/store';
 import { HeaderComponent } from '@todo-react/shared/feature-header';
 import classNames from 'classnames';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 export function TodoMain() {
   const { theme } = useContext(ThemeContext);

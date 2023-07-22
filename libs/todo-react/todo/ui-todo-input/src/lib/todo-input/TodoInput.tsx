@@ -4,8 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import styles from './TodoInput.module.scss';
-import { ThemeContext } from '@todo-react/shared/store';
 import classNames from 'classnames';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 const schema = yup.object({
   newTodo: yup
