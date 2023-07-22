@@ -35,6 +35,7 @@ export function AuthProvider(props: AuthContextProps) {
 
   useEffect(() => {
     isLoggedIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

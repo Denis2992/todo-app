@@ -17,8 +17,8 @@ import styles from './TodoList.module.scss';
 import { useContext } from 'react';
 import { FilterType, Todo } from '@todo-app/shared/domain';
 import { TodoItem } from '@todo-react/todo/ui-todo-item';
-import { ThemeContext } from '@todo-react/shared/store';
 import { FilterBar } from '@todo-react/todo/ui-filter-bar';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 export interface TodoListProps {
   isMobile: boolean;

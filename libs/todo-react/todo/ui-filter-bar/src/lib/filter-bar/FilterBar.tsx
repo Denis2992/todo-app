@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import classNames from 'classnames';
 
 import styles from './FilterBar.module.scss';
-import { ThemeContext } from '@todo-react/shared/store';
 import { FilterType } from '@todo-app/shared/domain';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 export interface FilterBarProps {
   activeFilter: FilterType;

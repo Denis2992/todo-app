@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
-import { ThemeContext } from '@todo-react/shared/store';
 import styles from './AuthPage.module.scss';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 export interface AuthPageWrapperProps {
   children: React.ReactNode;

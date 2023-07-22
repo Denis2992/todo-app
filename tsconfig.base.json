@@ -32,13 +32,15 @@
       "@todo-react/auth/feature-sign-up": [
         "libs/todo-react/auth/feature-sign-up/src/index.ts"
       ],
+      "@todo-react/shared/data-access": [
+        "libs/todo-react/shared/data-access/src/index.ts"
+      ],
       "@todo-react/shared/domain": [
         "libs/todo-react/shared/domain/src/index.ts"
       ],
       "@todo-react/shared/feature-header": [
         "libs/todo-react/shared/feature-header/src/index.ts"
       ],
-      "@todo-react/shared/store": ["libs/todo-react/shared/store/src/index.ts"],
       "@todo-react/shared/ui-button": [
         "libs/todo-react/shared/ui-button/src/index.ts"
       ],
@@ -48,7 +50,6 @@
       "@todo-react/shared/ui-user-message": [
         "libs/todo-react/shared/ui-user-message/src/index.ts"
       ],
-      "@todo-react/shared/util": ["libs/todo-react/shared/util/src/index.ts"],
       "@todo-react/shell": ["libs/todo-react/shell/src/index.ts"],
       "@todo-react/todo/data-access": [
         "libs/todo-react/todo/data-access/src/index.ts"
@@ -68,7 +69,8 @@
       ],
       "@todo-react/todo/ui-todo-item": [
         "libs/todo-react/todo/ui-todo-item/src/index.ts"
-      ]
+      ],
+      "@todo-react/todo/util": ["libs/todo-react/todo/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { FormInput } from '@todo-react/shared/ui-form-input';
 import styles from './LoginForm.module.scss';
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext, ThemeContext } from '@todo-react/shared/store';
 import { Button } from '@todo-react/shared/ui-button';
 import {
   emailValidator,
@@ -14,6 +13,7 @@ import {
 import { loginUser } from '@todo-react/auth/data-access';
 import { LoginPayload } from '@todo-app/shared/domain';
 import { UserMessage } from '@todo-react/shared/ui-user-message';
+import { AuthContext, ThemeContext } from '@todo-react/shared/data-access';
 
 export function LoginForm() {
   const [signUpSucceed, setSignUpSucceed] = useState<boolean>(false);

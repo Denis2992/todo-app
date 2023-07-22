@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import styles from './SignUpForm.module.scss';
 import { FormInput } from '@todo-react/shared/ui-form-input';
 import { Button } from '@todo-react/shared/ui-button';
-import { ThemeContext } from '@todo-react/shared/store';
 import { SignupPayload } from '@todo-app/shared/domain';
 import {
   confirmPasswordValidator,
@@ -16,6 +15,7 @@ import {
 } from '@todo-react/auth/domain';
 import { signupUser } from '@todo-react/auth/data-access';
 import { UserMessage } from '@todo-react/shared/ui-user-message';
+import { ThemeContext } from '@todo-react/shared/data-access';
 
 type signUpFormInputType = 'email' | 'name' | 'password' | 'confirmPassword';
 

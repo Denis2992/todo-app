@@ -15,6 +15,13 @@ todoRouter.post(
   todoController.addTodo
 );
 
+todoRouter.post(
+  '/todos',
+  [body('todos').isLength({ min: 1 })],
+  isAuth,
+  todoController.addManyTodos
+);
+
 todoRouter.put(
   '/todo/delete-completed',
   isAuth,

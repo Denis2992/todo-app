@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 
 import { handleError, checkData, throwNewError } from '@todo-api/shared/util';
 import { Todo, User } from '@todo-api/shared/domain';
+import { Todo as TodoDTO } from '@todo-app/shared/domain';
 
 export const getTodos = async (
   req: Request,
@@ -14,15 +15,13 @@ export const getTodos = async (
   try {
     const user = await User.findById(userId);
 
-    const mappedTodos = user.todos.map((todo) => ({
-      title: todo.title,
-      checked: todo.checked,
-      id: todo._id,
-    }));
-
     res.status(200).json({
-      message: 'Fetched posts successfully.',
-      todos: mappedTodos,
+      message: 'Fetched todos successfully.',
+      todos: user.todos.map((todo) => ({
+        title: todo.title,
+        checked: todo.checked,
+        id: todo._id,
+      })),
     });
   } catch (err) {
     handleError(err, next);
@@ -60,6 +59,44 @@ export const addTodo = async (
         title: todo.title,
         checked: todo.checked,
       },
+    });
+  } catch (err) {
+    handleError(err, next);
+  }
+};
+
+export const addManyTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const todos = req.body.todos;
+  const userId = req.body.userId;
+
+  const newTodos: (typeof Todo)[] = todos.map((todo: TodoDTO) => {
+    return new Todo({
+      title: todo.title,
+      checked: todo.checked,
+    });
+  });
+
+  try {
+    const user = await User.updateOne(
+      { _id: userId },
+      { $push: { todos: newTodos } }
+    );
+
+    checkData(user);
+
+    const todos = (await User.findById(userId)).todos.map((todo) => ({
+      title: todo.title,
+      checked: todo.checked,
+      id: todo._id,
+    }));
+
+    res.status(201).json({
+      message: 'Todos created and fetched successfully!',
+      todos,
     });
   } catch (err) {
     handleError(err, next);

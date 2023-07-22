@@ -4,20 +4,18 @@ import { arrayMove } from '@dnd-kit/sortable';
 
 import styles from './TodoPage.module.scss';
 import { BREAKPOINTS } from '@todo-react/shared/domain';
-import { AuthContext, ThemeContext } from '@todo-react/shared/store';
 import { TodoList } from '@todo-react/todo/feature-todo-list';
 import { TodoInput } from '@todo-react/todo/ui-todo-input';
 import { FilterBar } from '@todo-react/todo/ui-filter-bar';
 import { FilterType, Todo } from '@todo-app/shared/domain';
 import {
-  addTodo,
-  deleteComplitedTodos,
-  deleteTodo,
-  getTodos,
-  updateTodo,
+  todoDataAccess,
+  todoLocaleStorage,
 } from '@todo-react/todo/data-access';
 import classNames from 'classnames';
 import { UserMessage } from '@todo-react/shared/ui-user-message';
+import { AuthContext, ThemeContext } from '@todo-react/shared/data-access';
+import { changeTodoStatus } from '@todo-react/todo/util';
 
 export function TodoPage() {
   const { theme } = useContext(ThemeContext);
@@ -28,17 +26,15 @@ export function TodoPage() {
   const { isAuth, token } = useContext(AuthContext);
 
   useEffect(() => {
-    if (isAuth) {
-      getTodos(token)
-        .then((res) => {
-          setTodos(res.todos);
-        })
-        .catch((err) => {
-          setErrorMessage(err.message);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
+    todoDataAccess
+      .getTodos(token)
+      .then((res) => {
+        setTodos(res.todos);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+      });
+  }, [isAuth, token]);
 
   const isMobile = (): boolean => {
     return breakpoint === 'mobile';
@@ -56,17 +52,14 @@ export function TodoPage() {
   };
 
   const onItemAdd = (todo: string) => {
-    if (isAuth) {
-      addTodo(todo, token)
-        .then((resData) => {
-          setTodos((prevState) => [...prevState, resData.todo]);
-        })
-        .catch((err) => {
-          setErrorMessage(err.message);
-        });
-    } else {
-      setErrorMessage("Can't add a todo when you are not logged in.");
-    }
+    todoDataAccess
+      .addTodo(todo, token)
+      .then((resData) => {
+        setTodos((prevState) => [...prevState, resData.todo]);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+      });
   };
 
   const handleDragEnd = (activeIndex: number, overIndex: number) => {
@@ -74,18 +67,10 @@ export function TodoPage() {
   };
 
   const onCheckboxClick = (id: string) => {
-    updateTodo(id, token)
+    todoDataAccess
+      .updateTodo(id, token)
       .then(() => {
-        setTodos((prevTodos) =>
-          prevTodos.map((todo) =>
-            todo.id === id
-              ? {
-                  ...todo,
-                  checked: !todo.checked,
-                }
-              : todo
-          )
-        );
+        setTodos((prevTodos) => changeTodoStatus(prevTodos, id));
       })
       .catch((err) => {
         setErrorMessage(err.message);
@@ -93,7 +78,8 @@ export function TodoPage() {
   };
 
   const onItemDelete = (id: string) => {
-    deleteTodo(id, token)
+    todoDataAccess
+      .deleteTodo(id, token)
       .then((resData) => {
         setTodos((prevState) =>
           prevState.filter((todo) => todo.id !== resData.todoId)
@@ -109,7 +95,8 @@ export function TodoPage() {
   };
 
   const onClearCompletedTodos = () => {
-    deleteComplitedTodos(token)
+    todoDataAccess
+      .deleteComplitedTodos(token)
       .then(() => {
         setTodos((prevTodos) =>
           prevTodos.filter((todo) => todo.checked !== true)

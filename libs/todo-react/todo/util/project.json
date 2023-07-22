@@ -1,24 +1,22 @@
 {
-  "name": "todo-react-shared-store",
+  "name": "todo-react-todo-util",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/todo-react/shared/store/src",
+  "sourceRoot": "libs/todo-react/todo/util/src",
   "projectType": "library",
-  "tags": ["type:store", "scope: shared"],
+  "tags": ["scope:"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/todo-react/shared/store/**/*.{ts,tsx,js,jsx}"
-        ]
+        "lintFilePatterns": ["libs/todo-react/todo/util/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/todo-react/shared/store/jest.config.ts",
+        "jestConfig": "libs/todo-react/todo/util/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

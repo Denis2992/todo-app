@@ -1,4 +1,3 @@
-import { checkStatusCode } from '@todo-react/shared/util';
 import {
   LoginSuccessPayload,
   SignupSuccessPayload,
@@ -19,8 +18,13 @@ export async function loginUser(
     }),
   });
 
-  checkStatusCode(res, 'Wrong email or password.', 401);
-  checkStatusCode(res, 'Something went wrong! Please try again.');
+  if (res.status === 401) {
+    throw new Error('Wrong email or password.');
+  }
+
+  if (res.status !== 200) {
+    throw new Error('Something went wrong! Please try again.');
+  }
 
   return await res.json();
 }

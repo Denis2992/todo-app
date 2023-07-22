@@ -1,81 +1,86 @@
-import { checkStatusCode } from '@todo-react/shared/util';
 import { Todo } from '@todo-app/shared/domain';
+import * as todoApi from '../api/todo.api';
+import * as todoLocalStorage from '../local-storage-manager/todo-local-storage-manager';
 
-export async function getTodos(
+export function getTodos(
   token: string | null
 ): Promise<{ message: string; todos: Todo[] }> {
-  const res = await fetch('/api/todo', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+  if (token) {
+    return checkTodosInLocalStorage(token);
+  }
+
+  return new Promise((resolve) => {
+    const todos = todoLocalStorage.getTodos();
+    resolve({ message: 'Got from locale storage', todos });
   });
-
-  checkStatusCode(res, 'Failed to fetch todos');
-
-  return await res.json();
 }
 
-export async function addTodo(
+export function addTodo(
   title: string,
   token: string | null
 ): Promise<{ message: string; todo: Todo }> {
-  const res = await fetch('/api/todo', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ title }),
+  if (token) {
+    return todoApi.addTodo(title, token);
+  }
+
+  return new Promise((resolve) => {
+    const newTodo = todoLocalStorage.addTodo(title);
+    resolve({ message: 'Added to local storage', todo: newTodo });
   });
-
-  checkStatusCode(res, 'Creating a todo failed!', 201);
-
-  return res.json();
 }
 
-export async function updateTodo(
+export function updateTodo(
   id: string,
   token: string | null
 ): Promise<{ message: string }> {
-  const res = await fetch('/api/todo/' + id, {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+  if (token) {
+    return todoApi.updateTodo(id, token);
+  }
+
+  return new Promise((resolve) => {
+    todoLocalStorage.updateTodo(id);
+    resolve({ message: 'Updated in local storage.' });
   });
-
-  checkStatusCode(res, 'Updating a todo failed!');
-
-  return res.json();
 }
 
-export async function deleteTodo(
+export function deleteTodo(
   id: string,
   token: string | null
 ): Promise<{ message: string; todoId: string }> {
-  const res = await fetch('/api/todo/' + id, {
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+  if (token) {
+    return todoApi.deleteTodo(id, token);
+  }
+
+  return new Promise((resolve) => {
+    todoLocalStorage.deleteTodo(id);
+    resolve({ message: 'Deleted in local storage.', todoId: id });
   });
-
-  checkStatusCode(res, 'Deleting a todo failed!');
-
-  return res.json();
 }
 
-export async function deleteComplitedTodos(
+export function deleteComplitedTodos(
   token: string | null
 ): Promise<{ message: string }> {
-  const res = await fetch('/api/todo/delete-completed', {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
+  if (token) {
+    return todoApi.deleteComplitedTodos(token);
+  }
+
+  return new Promise((resolve) => {
+    todoLocalStorage.deleteCompletedTodos();
+    resolve({ message: 'Deleted todos in local storage.' });
   });
+}
 
-  checkStatusCode(res, 'Deleting a completed todo failed!');
+export async function checkTodosInLocalStorage(
+  token: string | null
+): Promise<{ message: string; todos: Todo[] }> {
+  const todos = todoLocalStorage.getTodos();
+  if (todos.length > 0) {
+    const res = await todoApi.addManyTodos(token, todos);
 
-  return res.json();
+    todoLocalStorage.clearTodos();
+
+    return res;
+  }
+
+  return todoApi.getTodos(token);
 }
