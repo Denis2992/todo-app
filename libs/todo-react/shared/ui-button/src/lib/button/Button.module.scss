@@ -3,10 +3,11 @@
 .cta {
   font-family: $font-primary;
   font-size: 0.875rem;
-  padding: 0.5rem 3rem;
+  padding: 0.5rem 1rem;
   border-radius: 15px;
   border: 1px solid;
   transition: all 0.5s ease;
+  cursor: pointer;
 
   &--light {
     border-color: $color-disabled-light;
@@ -19,5 +20,11 @@
     border-color: $color-disabled-dark;
     background-color: $color-dark;
     color: $text-light-grey;
+  }
+
+  &--gradient {
+    background: $bg-gradient;
+    border: none;
+    color: #fff;
   }
 }

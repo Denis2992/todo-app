@@ -1,1 +1,1 @@
-export * from './lib/todo-list/TodoList';
+export * from './lib/containers/todo-list/TodoList';

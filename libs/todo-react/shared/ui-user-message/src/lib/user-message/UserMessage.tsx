@@ -1,9 +1,8 @@
 import classNames from 'classnames';
 
 import styles from './UserMessage.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-/* eslint-disable-next-line */
 export interface UserMessageProps {
   onTimerEnd: () => void;
   color: 'success' | 'error' | 'default';
@@ -12,14 +11,14 @@ export interface UserMessageProps {
 
 export function UserMessage(props: UserMessageProps) {
   useEffect(() => {
-    const errorTimer = setTimeout(() => {
+    const messageTimer = setTimeout(() => {
       props.onTimerEnd();
     }, 5000);
 
     return () => {
-      clearTimeout(errorTimer);
+      clearTimeout(messageTimer);
     };
-  }, [props]);
+  }, []);
 
   return (
     <div className={classNames(styles['user-message'])}>

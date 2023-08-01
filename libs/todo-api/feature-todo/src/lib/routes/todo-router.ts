@@ -16,18 +16,20 @@ todoRouter.post(
 );
 
 todoRouter.post(
-  '/todos',
+  '/todo/add-many',
   [body('todos').isLength({ min: 1 })],
   isAuth,
   todoController.addManyTodos
 );
 
-todoRouter.put(
+todoRouter.delete(
   '/todo/delete-completed',
   isAuth,
   todoController.deleteCompletedTodos
 );
 
-todoRouter.put('/todo/:todoId', isAuth, todoController.updateTodo);
+todoRouter.put('/todo/update-order', isAuth, todoController.updateTodosOrder);
+
+todoRouter.put('/todo/:todoId', isAuth, todoController.updateTodoStatus);
 
 todoRouter.delete('/todo/:todoId', isAuth, todoController.deleteTodo);

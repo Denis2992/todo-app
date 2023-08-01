@@ -17,18 +17,21 @@ import styles from './TodoList.module.scss';
 import { useContext } from 'react';
 import { FilterType, Todo } from '@todo-app/shared/domain';
 import { TodoItem } from '@todo-react/todo/ui-todo-item';
-import { FilterBar } from '@todo-react/todo/ui-filter-bar';
 import { ThemeContext } from '@todo-react/shared/data-access';
+import TodoBar from '../../components/todo-bar/TodoBar';
+import TodoOrderInfo from '../../components/todo-order-info/TodoOrderInfo';
 
 export interface TodoListProps {
   isMobile: boolean;
   todos: Todo[];
   activeFilter: FilterType;
+  todoOrderChanged: boolean;
   itemDeleted: (id: string) => void;
   checkboxClicked: (id: string) => void;
   filterChanged: (activeFilter: FilterType) => void;
-  onDragEnd: (activeIndex: number, overIndex: number) => void;
+  onDragEnd: (id: string, newIndex: number, oldIndex: number) => void;
   clearedCompletedTodos: () => void;
+  todoOrderSaved: () => void;
 }
 
 export function TodoList(props: TodoListProps) {
@@ -46,7 +49,19 @@ export function TodoList(props: TodoListProps) {
     return props.todos.filter((todo) => todo.checked === false).length;
   };
 
+  const filteredTodos = () => {
+    switch (props.activeFilter) {
+      case FilterType.ACTIVE:
+        return props.todos.filter((todo) => todo.checked === false);
+      case FilterType.COMPLETED:
+        return props.todos.filter((todo) => todo.checked === true);
+      default:
+        return props.todos;
+    }
+  };
+
   const handleDragEnd = (event: DragEndEvent) => {
+    console.log(event);
     const { active, over } = event;
 
     if (active.id !== over?.id) {
@@ -54,7 +69,8 @@ export function TodoList(props: TodoListProps) {
         (todo) => todo.id === active.id
       );
       const overIndex = props.todos.findIndex((todo) => todo.id === over?.id);
-      props.onDragEnd(activeIndex, overIndex);
+
+      props.onDragEnd(active.id.toString(), activeIndex, overIndex);
     }
   };
 
@@ -64,6 +80,10 @@ export function TodoList(props: TodoListProps) {
 
   const onItemDelete = (id: string) => {
     props.itemDeleted(id);
+  };
+
+  const onTodoOrderSave = () => {
+    props.todoOrderSaved();
   };
 
   const onFilterChange = (filter: FilterType) => {
@@ -90,7 +110,7 @@ export function TodoList(props: TodoListProps) {
             items={props.todos}
             strategy={verticalListSortingStrategy}
           >
-            {props.todos.map((todo, index) => (
+            {filteredTodos().map((todo, index) => (
               <TodoItem
                 key={todo.id}
                 todo={todo}
@@ -111,38 +131,20 @@ export function TodoList(props: TodoListProps) {
           </div>
         )}
 
-        <div
-          className={classNames(
-            styles['todo-list-summary'],
-            styles[`todo-list-summary--${theme}`]
-          )}
-        >
-          <p
-            className={classNames(
-              styles['todo-list-summary__left'],
-              styles[`todo-list-summary__left--${theme}`]
-            )}
-          >
-            {todosLeft()} items left
-          </p>
+        <TodoOrderInfo
+          orderChanged={props.todoOrderChanged}
+          orderSaved={onTodoOrderSave}
+          theme={theme}
+        ></TodoOrderInfo>
 
-          {!props.isMobile && (
-            <FilterBar
-              activeFilter={props.activeFilter}
-              filterChanged={onFilterChange}
-            ></FilterBar>
-          )}
-
-          <button
-            className={classNames(
-              styles['todo-list-summary__clear-btn'],
-              styles[`todo-list-summary__clear-btn--${theme}`]
-            )}
-            onClick={onClearComletedTodos}
-          >
-            Clear Completed
-          </button>
-        </div>
+        <TodoBar
+          todosLeft={todosLeft()}
+          theme={theme}
+          activeFilter={props.activeFilter}
+          isMobile={props.isMobile}
+          filterChanged={onFilterChange}
+          clearedCompletedTodos={onClearComletedTodos}
+        ></TodoBar>
       </div>
     </DndContext>
   );

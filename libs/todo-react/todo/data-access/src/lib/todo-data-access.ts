@@ -29,17 +29,31 @@ export function addTodo(
   });
 }
 
-export function updateTodo(
+export function updateTodoStatus(
   id: string,
   token: string | null
 ): Promise<{ message: string }> {
   if (token) {
-    return todoApi.updateTodo(id, token);
+    return todoApi.updateTodoStatus(id, token);
   }
 
   return new Promise((resolve) => {
     todoLocalStorage.updateTodo(id);
     resolve({ message: 'Updated in local storage.' });
+  });
+}
+
+export function updateTodosOrder(
+  token: string | null,
+  todos: Todo[]
+): Promise<{ message: string }> {
+  if (token) {
+    return todoApi.updateTodosOrder(token, todos);
+  }
+
+  return new Promise((resolve) => {
+    todoLocalStorage.setTodos(todos);
+    resolve({ message: 'Order was saved in local storage.' });
   });
 }
 

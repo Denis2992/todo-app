@@ -1,0 +1,39 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.todo-list {
+  margin-top: 1rem;
+
+  @include breakpoint-up('tablet') {
+    margin-top: 1.5rem;
+  }
+
+  &--light {
+    box-shadow: $shadow-light;
+    filter: $filter-light;
+  }
+
+  &-empty-filter {
+    height: $todo-item-height-mobile;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+
+    @include breakpoint-up('tablet') {
+      height: $todo-item-height-desktop;
+      font-size: 1.125rem;
+    }
+
+    &--light {
+      color: $color-dark;
+      @include bg-color('light');
+      @include first-todo('light');
+    }
+
+    &--dark {
+      color: $text-light-grey;
+      @include bg-color('dark');
+      @include first-todo('dark');
+    }
+  }
+}

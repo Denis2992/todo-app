@@ -39,7 +39,7 @@ export async function addManyTodos(
   token: string | null,
   todos: Todo[]
 ): Promise<{ message: string; todos: Todo[] }> {
-  const res = await fetch('/api/todos', {
+  const res = await fetch('/api/todo/add-many', {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + token,
@@ -55,7 +55,7 @@ export async function addManyTodos(
   return res.json();
 }
 
-export async function updateTodo(
+export async function updateTodoStatus(
   id: string,
   token: string | null
 ): Promise<{ message: string }> {
@@ -63,11 +63,32 @@ export async function updateTodo(
     method: 'PUT',
     headers: {
       Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
     },
   });
 
   if (res.status !== 200) {
     throw new Error('Updating a todo failed!');
+  }
+
+  return res.json();
+}
+
+export async function updateTodosOrder(
+  token: string | null,
+  todos: Todo[]
+): Promise<{ message: string }> {
+  const res = await fetch('/api/todo/update-order', {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ todos }),
+  });
+
+  if (res.status !== 200) {
+    throw new Error('Saving todos order failed!');
   }
 
   return res.json();
@@ -95,7 +116,7 @@ export async function deleteComplitedTodos(
   token: string | null
 ): Promise<{ message: string }> {
   const res = await fetch('/api/todo/delete-completed', {
-    method: 'PUT',
+    method: 'delete',
     headers: {
       Authorization: 'Bearer ' + token,
     },
