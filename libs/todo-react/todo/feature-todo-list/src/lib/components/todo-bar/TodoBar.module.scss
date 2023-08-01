@@ -1,0 +1,50 @@
+@import '/libs/shared/styles/src/lib/index.scss';
+
+.todo-bar {
+  height: $todo-item-height-mobile;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  padding: 0 1.25rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  &--light {
+    @include bg-color('light');
+  }
+
+  &--dark {
+    @include bg-color('dark');
+  }
+
+  &__clear-btn {
+    border: none;
+    font-family: $font-primary;
+    background-color: $color-white;
+    font-size: 0.75rem;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  @include breakpoint-up('tablet') {
+    font-size: 0.875rem;
+    padding: 0 1.5rem;
+    height: $todo-item-height-desktop;
+
+    &__clear-btn {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.todo-bar,
+.todo-bar__clear-btn {
+  &--light {
+    color: $text-grey;
+  }
+
+  &--dark {
+    color: $text-dark;
+  }
+}

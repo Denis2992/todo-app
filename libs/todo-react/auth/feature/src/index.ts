@@ -1,1 +1,1 @@
-export * from './lib/containers/auth-page/AuthPage';
+export * from './lib/auth-page/AuthPage';

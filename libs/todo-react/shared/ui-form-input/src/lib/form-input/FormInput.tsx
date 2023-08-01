@@ -24,26 +24,6 @@ export function FormInput(props: FormInputProps) {
     }
   }, [props.type]);
 
-  const showPasswordIcon = () => {
-    if (showToggleButton) {
-      return (
-        <div
-          className={classNames(
-            styles['form-input-show-password'],
-            styles[`form-input-show-password--${props.theme}`]
-          )}
-        >
-          <img
-            className={styles['form-input-show-password__icon']}
-            src={`../assets/${showPassword ? 'view' : 'hide'}-icon.png`}
-            alt="show-password-icon"
-            onClick={() => setShowPassword(!showPassword)}
-          ></img>
-        </div>
-      );
-    }
-  };
-
   return (
     <div className={classNames(styles['form-input'], styles['field'])}>
       <input
@@ -57,7 +37,23 @@ export function FormInput(props: FormInputProps) {
         id={props.name}
         {...props.register}
       />
-      {showPasswordIcon()}
+
+      {showToggleButton && (
+        <div
+          className={classNames(
+            styles['form-input-show-password'],
+            styles[`form-input-show-password--${props.theme}`]
+          )}
+        >
+          <img
+            className={styles['form-input-show-password__icon']}
+            src={`../assets/${showPassword ? 'view' : 'hide'}-icon.png`}
+            alt="show-password-icon"
+            onClick={() => setShowPassword(!showPassword)}
+          ></img>
+        </div>
+      )}
+
       <label
         htmlFor="name"
         className={classNames(

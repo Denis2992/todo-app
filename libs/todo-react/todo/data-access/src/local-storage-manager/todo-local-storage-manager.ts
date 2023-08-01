@@ -1,6 +1,10 @@
 import uniqid from 'uniqid';
 
-import { changeTodoStatus } from '@todo-react/todo/util';
+import {
+  updateTodoStatus,
+  updateTodosAfterDeleteMany,
+  updateTodosAfterDeleteOne,
+} from '@todo-react/todo/util';
 import { Todo } from '@todo-app/shared/domain';
 
 const todoStorage = 'TODOS';
@@ -20,6 +24,7 @@ export function addTodo(title: string): Todo {
     title,
     checked: false,
     id: uniqid('local-'),
+    index: getTodoIndex(),
   };
 
   setTodos([...getTodos(), newTodo]);
@@ -28,24 +33,28 @@ export function addTodo(title: string): Todo {
 }
 
 export function updateTodo(id: string) {
-  const updatedTodos = changeTodoStatus(getTodos(), id);
+  const updatedTodos = updateTodoStatus(getTodos(), id);
   setTodos(updatedTodos);
 }
 
 export function deleteTodo(id: string) {
-  const updatedTodos = getTodos().filter((todo) => todo.id !== id);
+  const updatedTodos = updateTodosAfterDeleteOne(getTodos(), id);
   setTodos(updatedTodos);
 }
 
 export function deleteCompletedTodos() {
-  const updatedTodos = getTodos().filter((todo) => todo.checked !== true);
+  const updatedTodos = updateTodosAfterDeleteMany(getTodos());
   setTodos(updatedTodos);
 }
 
-function setTodos(todos: Todo[]) {
+export function setTodos(todos: Todo[]) {
   localStorage.setItem(todoStorage, JSON.stringify(todos));
 }
 
 export function clearTodos() {
   localStorage.removeItem(todoStorage);
+}
+
+export function getTodoIndex(): number {
+  return getTodos().length;
 }

@@ -1,6 +1,7 @@
 import useBreakpoint from 'use-breakpoint';
 import { useContext, useEffect, useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
+import classNames from 'classnames';
 
 import styles from './TodoPage.module.scss';
 import { BREAKPOINTS } from '@todo-react/shared/domain';
@@ -8,22 +9,27 @@ import { TodoList } from '@todo-react/todo/feature-todo-list';
 import { TodoInput } from '@todo-react/todo/ui-todo-input';
 import { FilterBar } from '@todo-react/todo/ui-filter-bar';
 import { FilterType, Todo } from '@todo-app/shared/domain';
-import {
-  todoDataAccess,
-  todoLocaleStorage,
-} from '@todo-react/todo/data-access';
-import classNames from 'classnames';
+import { todoDataAccess } from '@todo-react/todo/data-access';
 import { UserMessage } from '@todo-react/shared/ui-user-message';
 import { AuthContext, ThemeContext } from '@todo-react/shared/data-access';
-import { changeTodoStatus } from '@todo-react/todo/util';
+import {
+  updateTodoStatus,
+  updateTodosAfterDeleteMany,
+  updateTodosAfterDeleteOne,
+  updateTodosPriority,
+} from '@todo-react/todo/util';
 
 export function TodoPage() {
-  const { theme } = useContext(ThemeContext);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FilterType>(FilterType.ALL);
+  const [todoOrderChanged, setTodoOrderChanged] = useState(false);
+  const [userMessage, setUserMessage] = useState<{
+    message: string;
+    status: 'success' | 'error';
+  } | null>(null);
+  const { theme } = useContext(ThemeContext);
   const { isAuth, token } = useContext(AuthContext);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
 
   useEffect(() => {
     todoDataAccess
@@ -32,23 +38,12 @@ export function TodoPage() {
         setTodos(res.todos);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setUserMessage({ message: err.message, status: 'error' });
       });
   }, [isAuth, token]);
 
   const isMobile = (): boolean => {
     return breakpoint === 'mobile';
-  };
-
-  const filteredTodos = () => {
-    switch (activeFilter) {
-      case FilterType.ACTIVE:
-        return todos.filter((todo) => todo.checked === false);
-      case FilterType.COMPLETED:
-        return todos.filter((todo) => todo.checked === true);
-      default:
-        return todos;
-    }
   };
 
   const onItemAdd = (todo: string) => {
@@ -58,22 +53,41 @@ export function TodoPage() {
         setTodos((prevState) => [...prevState, resData.todo]);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setUserMessage({ message: err.message, status: 'error' });
       });
   };
 
-  const handleDragEnd = (activeIndex: number, overIndex: number) => {
-    setTodos((prevState) => arrayMove(prevState, activeIndex, overIndex));
+  const handleDragEnd = (id: string, newIndex: number, oldIndex: number) => {
+    setTodos((prevState) =>
+      arrayMove(
+        updateTodosPriority(prevState, id, newIndex, oldIndex),
+        newIndex,
+        oldIndex
+      )
+    );
+    setTodoOrderChanged(true);
+  };
+
+  const onTodoOrderSave = () => {
+    todoDataAccess
+      .updateTodosOrder(token, todos)
+      .then((res) => {
+        setTodoOrderChanged(false);
+        setUserMessage({ message: res.message, status: 'success' });
+      })
+      .catch((err) => {
+        setUserMessage({ message: err.message, status: 'error' });
+      });
   };
 
   const onCheckboxClick = (id: string) => {
     todoDataAccess
-      .updateTodo(id, token)
+      .updateTodoStatus(id, token)
       .then(() => {
-        setTodos((prevTodos) => changeTodoStatus(prevTodos, id));
+        setTodos((prevTodos) => updateTodoStatus(prevTodos, id));
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setUserMessage({ message: err.message, status: 'error' });
       });
   };
 
@@ -82,11 +96,12 @@ export function TodoPage() {
       .deleteTodo(id, token)
       .then((resData) => {
         setTodos((prevState) =>
-          prevState.filter((todo) => todo.id !== resData.todoId)
+          updateTodosAfterDeleteOne(prevState, resData.todoId)
         );
+        console.log(todos);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setUserMessage({ message: err.message, status: 'error' });
       });
   };
 
@@ -98,12 +113,10 @@ export function TodoPage() {
     todoDataAccess
       .deleteComplitedTodos(token)
       .then(() => {
-        setTodos((prevTodos) =>
-          prevTodos.filter((todo) => todo.checked !== true)
-        );
+        setTodos((prevTodos) => updateTodosAfterDeleteMany(prevTodos));
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setUserMessage({ message: err.message, status: 'error' });
       });
   };
 
@@ -115,11 +128,13 @@ export function TodoPage() {
           <div className={styles['todo-list']}>
             <TodoList
               isMobile={isMobile()}
-              todos={filteredTodos()}
+              todos={todos}
+              activeFilter={activeFilter}
+              todoOrderChanged={todoOrderChanged}
               checkboxClicked={onCheckboxClick}
               itemDeleted={onItemDelete}
               onDragEnd={handleDragEnd}
-              activeFilter={activeFilter}
+              todoOrderSaved={onTodoOrderSave}
               filterChanged={onFilterChange}
               clearedCompletedTodos={onClearCompletedTodos}
             ></TodoList>
@@ -151,9 +166,12 @@ export function TodoPage() {
           </p>
         )}
 
-        {errorMessage && (
-          <UserMessage color="error" onTimerEnd={() => setErrorMessage(null)}>
-            {errorMessage}
+        {userMessage && (
+          <UserMessage
+            color={userMessage.status}
+            onTimerEnd={() => setUserMessage(null)}
+          >
+            {userMessage.message}
           </UserMessage>
         )}
       </div>

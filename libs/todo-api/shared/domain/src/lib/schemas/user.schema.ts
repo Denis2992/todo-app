@@ -1,5 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
-import { todoSchema } from './todo.model';
+import { todoSchema } from './todo.schema';
 
 const userSchema = new Schema({
   email: {
