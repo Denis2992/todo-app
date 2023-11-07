@@ -1,9 +1,9 @@
 import {
+  closestCenter,
   DndContext,
   DragEndEvent,
   MouseSensor,
   TouchSensor,
-  closestCenter,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -45,23 +45,20 @@ export function TodoList(props: TodoListProps) {
   });
   const sensors = useSensors(mouseSensor, touchSensor);
 
-  const todosLeft = (): number => {
-    return props.todos.filter((todo) => todo.checked === false).length;
-  };
+  const todosLeft: number = props.todos.filter((todo) => !todo.checked).length;
 
   const filteredTodos = () => {
     switch (props.activeFilter) {
       case FilterType.ACTIVE:
-        return props.todos.filter((todo) => todo.checked === false);
+        return props.todos.filter((todo) => !todo.checked);
       case FilterType.COMPLETED:
-        return props.todos.filter((todo) => todo.checked === true);
+        return props.todos.filter((todo) => todo.checked);
       default:
         return props.todos;
     }
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
-    console.log(event);
     const { active, over } = event;
 
     if (active.id !== over?.id) {
@@ -90,12 +87,13 @@ export function TodoList(props: TodoListProps) {
     props.filterChanged(filter);
   };
 
-  const onClearComletedTodos = () => {
+  const onClearCompletedTodos = () => {
     props.clearedCompletedTodos();
   };
 
   return (
     <DndContext
+      data-testid="dnd-contex"
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
       sensors={sensors}
@@ -138,12 +136,12 @@ export function TodoList(props: TodoListProps) {
         ></TodoOrderInfo>
 
         <TodoBar
-          todosLeft={todosLeft()}
+          todosLeft={todosLeft}
           theme={theme}
           activeFilter={props.activeFilter}
           isMobile={props.isMobile}
           filterChanged={onFilterChange}
-          clearedCompletedTodos={onClearComletedTodos}
+          clearedCompletedTodos={onClearCompletedTodos}
         ></TodoBar>
       </div>
     </DndContext>

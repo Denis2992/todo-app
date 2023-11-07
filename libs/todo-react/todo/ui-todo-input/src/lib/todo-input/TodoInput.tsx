@@ -31,10 +31,8 @@ export function TodoInput(props: TodoInputProps) {
   });
 
   const submitTodo = (form: FormData) => {
-    if (form.newTodo) {
-      props.itemAdded(form.newTodo);
-      reset();
-    }
+    props.itemAdded(form.newTodo);
+    reset();
   };
 
   return (
@@ -43,7 +41,11 @@ export function TodoInput(props: TodoInputProps) {
         className={classNames(styles.form, styles[`form--${theme}`])}
         onSubmit={handleSubmit(submitTodo)}
       >
-        <button className={styles['form__button']} type="submit"></button>
+        <button
+          data-testid="add-todo-btn"
+          className={styles['form__button']}
+          type="submit"
+        ></button>
         <input
           className={classNames(
             styles['form__input'],
@@ -54,7 +56,9 @@ export function TodoInput(props: TodoInputProps) {
           {...register('newTodo')}
         ></input>
       </form>
-      <p className={styles['form__message']}>{errors.newTodo?.message}</p>
+      <p className={styles['form__message']} role="alert">
+        {errors.newTodo?.message}
+      </p>
     </>
   );
 }

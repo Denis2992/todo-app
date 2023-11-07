@@ -3,7 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/todo-react/auth/feature/src",
   "projectType": "library",
-  "tags": ["scope:auth", "type:feature"],
+  "tags": ["type:feature", "scope:auth"],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
@@ -12,6 +12,20 @@
         "lintFilePatterns": [
           "libs/todo-react/auth/feature/**/*.{ts,tsx,js,jsx}"
         ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/todo-react/auth/feature/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   }

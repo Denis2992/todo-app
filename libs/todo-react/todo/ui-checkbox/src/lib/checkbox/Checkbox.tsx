@@ -10,24 +10,21 @@ export interface CheckboxProps {
 
 export function Checkbox(props: CheckboxProps) {
   const { theme } = useContext(ThemeContext);
-
+  const isChecked = props.checked
+    ? styles['checkbox--checked']
+    : styles[`checkbox--unchecked-${theme}`];
   const checkHandler = (e: MouseEvent) => {
     e.preventDefault();
     props.checkboxClicked();
   };
 
-  const isChecked = () => {
-    return props.checked
-      ? styles['checkbox--checked']
-      : styles[`checkbox--unchecked-${theme}`];
-  };
-
   return (
     <button
+      data-testid="check-todo-btn"
       className={classNames(
         styles.checkbox,
         styles[`checkbox--${theme}`],
-        isChecked()
+        isChecked
       )}
       onClick={checkHandler}
     >

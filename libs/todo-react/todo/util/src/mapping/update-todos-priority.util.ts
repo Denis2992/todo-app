@@ -5,7 +5,7 @@ export const updateTodosPriority = (
   id: string,
   oldIndex: number,
   newIndex: number
-) => {
+): Todo[] => {
   let index: number;
   let sliceFrom: number;
   let sliceTo: number;

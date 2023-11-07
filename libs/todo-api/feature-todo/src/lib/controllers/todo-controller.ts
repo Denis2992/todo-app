@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 
-import { handleError, checkData, throwNewError } from '@todo-api/shared/util';
+import { checkData, handleError, throwNewError } from '@todo-api/shared/util';
 import { Todo as TodoDTO } from '@todo-app/shared/domain';
 import { prepareTodoIndex } from '../helpers/prepare-todo-index.helper';
 import { Todo, User } from '@todo-api/shared/domain';
@@ -17,7 +17,7 @@ export const getTodos = async (
     const user = await User.findById(userId);
 
     res.status(200).json({
-      message: 'Fetched todos successfully.',
+      message: 'Todos were fetched successfully.',
       todos: user.todos.map((todo) => ({
         title: todo.title,
         checked: todo.checked,
@@ -55,11 +55,10 @@ export const addTodo = async (
       { _id: userId },
       { $push: { todos: todo } }
     );
-
     checkData(user);
 
     res.status(201).json({
-      message: 'Todo created successfully!',
+      message: 'Todo was created successfully!',
       todo: {
         id: todo._id,
         title: todo.title,
@@ -110,7 +109,7 @@ export const addManyTodos = async (
     }));
 
     res.status(201).json({
-      message: 'Todos created and fetched successfully!',
+      message: 'Todos were created successfully!',
       todos: mappedTodos,
     });
   } catch (err) {
@@ -139,7 +138,7 @@ export const updateTodoStatus = async (
 
     checkData(user);
 
-    res.status(200).json({ message: 'Todo updated' });
+    res.status(200).json({ message: 'Todo was updated.' });
   } catch (err) {
     handleError(err, next);
   }
@@ -159,11 +158,11 @@ export const updateTodosOrder = async (
     checkData(user);
 
     todos.forEach((todo) => {
-      const todoIndex = user.todos.findIndex(
-        (el) => el._id.toString() === todo.id
-      );
-
-      user.todos[todoIndex].index = todo.index;
+      user.todos.map((el) => {
+        if (el._id.toString() === todo.id && el.index !== todo.index) {
+          el.index = todo.index;
+        }
+      });
     });
 
     await user.save();
@@ -191,15 +190,13 @@ export const deleteTodo = async (
     user.todos.pull(todoId);
 
     user.todos.forEach((todo) => {
-      const todoIndex = user.todos.findIndex((el) => el._id === todo._id);
-
       if (todo.index > deletedTodo.index) {
-        user.todos[todoIndex].index--;
+        todo.index--;
       }
     });
 
     await user.save();
-    res.status(200).json({ message: 'Deleted todo.', todoId });
+    res.status(200).json({ message: 'Todo was deleted.', todoId });
   } catch (err) {
     handleError(err, next);
   }
@@ -225,7 +222,7 @@ export const deleteCompletedTodos = async (
     });
 
     await user.save();
-    res.status(200).json({ message: 'Deleted completed todos.' });
+    res.status(200).json({ message: 'Completed todos were deleted.' });
   } catch (err) {
     handleError(err, next);
   }

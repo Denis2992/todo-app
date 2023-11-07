@@ -1,9 +1,9 @@
 import * as bcrypt from 'bcrypt';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import * as jwt from 'jsonwebtoken';
 
-import { User, jwtPrivateKey } from '@todo-api/shared/domain';
+import { jwtPrivateKey, User } from '@todo-api/shared/domain';
 import { handleError, throwNewError } from '@todo-api/shared/util';
 
 const saltRounds = 10;
@@ -18,7 +18,6 @@ export const signUp = async (
   const email: string = req.body.email;
   const name: string = req.body.name;
   const password: string = req.body.password;
-
   try {
     if (!errors.isEmpty()) {
       throwNewError(422, 'Validation failed.', errors.array());

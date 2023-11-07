@@ -10,27 +10,40 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@todo-api/auth": ["libs/todo-api/feature-auth/src/index.ts"],
-      "@todo-api/shared/domain": ["libs/todo-api/shared/domain/src/index.ts"],
-      "@todo-api/shared/util": ["libs/todo-api/shared/util/src/index.ts"],
-      "@todo-api/todo": ["libs/todo-api/feature-todo/src/index.ts"],
-      "@todo-app/shared/domain": ["libs/shared/domain/src/index.ts"],
-      "@todo-app/shared/styles": ["libs/shared/styles/src/index.ts"],
+      "@todo-api/auth": [
+        "libs/todo-api/feature-auth/src/index.ts"
+      ],
+      "@todo-api/shared/domain": [
+        "libs/todo-api/shared/domain/src/index.ts"
+      ],
+      "@todo-api/shared/util": [
+        "libs/todo-api/shared/util/src/index.ts"
+      ],
+      "@todo-api/todo": [
+        "libs/todo-api/feature-todo/src/index.ts"
+      ],
+      "@todo-app/shared/domain": [
+        "libs/shared/domain/src/index.ts"
+      ],
+      "@todo-app/shared/styles": [
+        "libs/shared/styles/src/index.ts"
+      ],
+      "@todo-app/todo-react/auth/feature": [
+        "libs/todo-react/auth/feature/src/index.ts"
+      ],
       "@todo-react/auth/data-access": [
         "libs/todo-react/auth/data-access/src/index.ts"
       ],
-      "@todo-react/auth/domain": ["libs/todo-react/auth/domain/src/index.ts"],
-      "@todo-react/auth/feature": ["libs/todo-react/auth/feature/src/index.ts"],
-      "@todo-react/auth/feature-login": [
-        "libs/todo-react/auth/feature-login/src/index.ts"
-      ],
-      "@todo-react/auth/feature-sign-up": [
-        "libs/todo-react/auth/feature-sign-up/src/index.ts"
+      "@todo-react/auth/domain": [
+        "libs/todo-react/auth/domain/src/index.ts"
       ],
       "@todo-react/shared/data-access": [
         "libs/todo-react/shared/data-access/src/index.ts"
@@ -50,11 +63,15 @@
       "@todo-react/shared/ui-user-message": [
         "libs/todo-react/shared/ui-user-message/src/index.ts"
       ],
-      "@todo-react/shell": ["libs/todo-react/shell/src/index.ts"],
+      "@todo-react/shell": [
+        "libs/todo-react/shell/src/index.ts"
+      ],
       "@todo-react/todo/data-access": [
         "libs/todo-react/todo/data-access/src/index.ts"
       ],
-      "@todo-react/todo/feature": ["libs/todo-react/todo/feature/src/index.ts"],
+      "@todo-react/todo/feature": [
+        "libs/todo-react/todo/feature/src/index.ts"
+      ],
       "@todo-react/todo/feature-todo-list": [
         "libs/todo-react/todo/feature-todo-list/src/index.ts"
       ],
@@ -70,8 +87,13 @@
       "@todo-react/todo/ui-todo-item": [
         "libs/todo-react/todo/ui-todo-item/src/index.ts"
       ],
-      "@todo-react/todo/util": ["libs/todo-react/todo/util/src/index.ts"]
+      "@todo-react/todo/util": [
+        "libs/todo-react/todo/util/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

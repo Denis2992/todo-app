@@ -19,7 +19,7 @@ export function TodoBar(props: TodoBarProps) {
     props.filterChanged(filter);
   };
 
-  const onClearComletedTodos = () => {
+  const onClearCompletedTodos = () => {
     props.clearedCompletedTodos();
   };
 
@@ -47,11 +47,12 @@ export function TodoBar(props: TodoBarProps) {
       )}
 
       <button
+        data-testid="delete-completed-todos-btn"
         className={classNames(
           styles['todo-bar__clear-btn'],
           styles[`todo-bar__clear-btn--${props.theme}`]
         )}
-        onClick={onClearComletedTodos}
+        onClick={onClearCompletedTodos}
       >
         Clear Completed
       </button>

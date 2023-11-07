@@ -55,7 +55,7 @@ export function FormInput(props: FormInputProps) {
       )}
 
       <label
-        htmlFor="name"
+        htmlFor={props.name}
         className={classNames(
           styles['form-input__label'],
           styles[`form-input__label--${props.theme}`]
