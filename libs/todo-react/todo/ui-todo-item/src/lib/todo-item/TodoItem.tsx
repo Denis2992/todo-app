@@ -67,6 +67,7 @@ export function TodoItem(props: TodoItemProps) {
             })}
             {...attributes}
             {...listeners}
+            data-testid="sortable-item"
           >
             <p
               className={classNames(
@@ -84,6 +85,7 @@ export function TodoItem(props: TodoItemProps) {
         </div>
 
         <button
+          data-testid="delete-todo-btn"
           className={classNames(
             styles['todo-item__delete-btn'],
             styles[`todo-item__delete-btn--${theme}`]

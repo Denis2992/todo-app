@@ -9,7 +9,7 @@ import { ApiError } from '@todo-api/shared/domain';
 const mongoClient =
   'mongodb+srv://Denis299:fWglYTNTmSwNEpBk@cluster0.nqp4t2b.mongodb.net/todo-app?retryWrites=true&w=majority';
 
-const app = express();
+export const app = express();
 
 app.use(bodyParser.json());
 app.use('/api', todoRouter);

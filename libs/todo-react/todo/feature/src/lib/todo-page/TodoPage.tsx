@@ -13,10 +13,10 @@ import { todoDataAccess } from '@todo-react/todo/data-access';
 import { UserMessage } from '@todo-react/shared/ui-user-message';
 import { AuthContext, ThemeContext } from '@todo-react/shared/data-access';
 import {
-  updateTodoStatus,
   updateTodosAfterDeleteMany,
   updateTodosAfterDeleteOne,
   updateTodosPriority,
+  updateTodoStatus,
 } from '@todo-react/todo/util';
 
 export function TodoPage() {
@@ -98,7 +98,6 @@ export function TodoPage() {
         setTodos((prevState) =>
           updateTodosAfterDeleteOne(prevState, resData.todoId)
         );
-        console.log(todos);
       })
       .catch((err) => {
         setUserMessage({ message: err.message, status: 'error' });
@@ -111,7 +110,7 @@ export function TodoPage() {
 
   const onClearCompletedTodos = () => {
     todoDataAccess
-      .deleteComplitedTodos(token)
+      .deleteCompletedTodos(token)
       .then(() => {
         setTodos((prevTodos) => updateTodosAfterDeleteMany(prevTodos));
       })

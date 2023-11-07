@@ -1,10 +1,12 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import TodoMain from '../../components/todo-main/TodoMain';
 import { TodoPage } from '@todo-react/todo/feature';
-import { LoginForm } from '@todo-react/auth/feature-login';
-import { SignUpForm } from '@todo-react/auth/feature-sign-up';
-import { AuthPage } from '@todo-react/auth/feature';
+import {
+  AuthPage,
+  LoginForm,
+  SignUpForm,
+} from '@todo-app/todo-react/auth/feature';
 import { AuthProvider, ThemeProvider } from '@todo-react/shared/data-access';
 
 const routes = createBrowserRouter([

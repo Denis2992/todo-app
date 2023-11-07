@@ -5,7 +5,7 @@ import styles from './TodoOrderInfo.module.scss';
 import { ThemeType } from '@todo-react/shared/domain';
 import { useEffect, useState } from 'react';
 
-/* eslint-disable-next-line */
+
 export interface TodoOrderInfoProps {
   orderChanged: boolean;
   theme: ThemeType;

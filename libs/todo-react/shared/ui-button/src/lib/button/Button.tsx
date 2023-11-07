@@ -20,6 +20,7 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
+      data-testid="submit-btn"
       type={props.type}
       className={classNames(styles['cta'], {
         [styles[`cta--${props.theme}`]]: props.theme,
