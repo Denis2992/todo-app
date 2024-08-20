@@ -6,7 +6,7 @@
       "runner": "nx-cloud",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "ZTk5ZGVkMWQtMjc3Yi00MjE0LWIxMDMtNGRhZWYwMTc0MDExfHJlYWQtd3JpdGU="
+        "accessToken": "ZTJkYmE4NjUtMDAwYS00ZTJhLTk5NTItODkyYWM5NzAyMTBifHJlYWQtd3JpdGU="
       }
     }
   },
@@ -15,9 +15,7 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "e2e": {
-      "inputs": ["default", "^production"]
-    },
+    "e2e": { "inputs": ["default", "^production"] },
     "lint": {
       "inputs": [
         "default",
@@ -48,9 +46,7 @@
         "bundler": "webpack",
         "babel": true
       },
-      "component": {
-        "style": "scss"
-      },
+      "component": { "style": "scss" },
       "library": {
         "style": "scss",
         "linter": "eslint",
@@ -63,12 +59,7 @@
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nx/angular:component": {
-      "style": "scss"
-    }
+    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" },
+    "@nx/angular:component": { "style": "scss" }
   }
 }
