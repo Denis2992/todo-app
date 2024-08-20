@@ -7,12 +7,16 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/todo-api-e2e/jest.config.ts"
+        "jestConfig": "apps/todo-api-e2e/jest.config.ts",
+        "passWithNoTests": true
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/todo-api-e2e/**/*.{js,ts}"]
+      }
     }
   }
 }

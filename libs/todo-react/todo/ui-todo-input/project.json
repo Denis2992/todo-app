@@ -6,14 +6,26 @@
   "tags": ["type:ui", "scope:todo"],
   "targets": {
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/todo-react/todo/ui-todo-input/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/todo-react/todo/ui-todo-input/jest.config.ts"
+        "jestConfig": "libs/todo-react/todo/ui-todo-input/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   }

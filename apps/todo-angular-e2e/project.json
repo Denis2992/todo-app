@@ -3,8 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/todo-angular-e2e/src",
   "projectType": "application",
-  "tags": [],
-  "implicitDependencies": ["todo-angular"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -23,8 +21,13 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/todo-angular-e2e/**/*.{js,ts}"]
+      }
     }
-  }
+  },
+  "tags": [],
+  "implicitDependencies": ["todo-angular"]
 }
