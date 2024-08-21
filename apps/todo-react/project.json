@@ -91,6 +91,10 @@
           "codeCoverage": true
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/todo-react/Dockerfile . -t todo-react"
     }
   },
   "tags": []
