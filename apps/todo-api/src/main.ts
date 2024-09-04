@@ -31,11 +31,10 @@ app.use((error: ApiError, req: Request, res: Response) => {
   res.status(status).json({ message: message, data: data });
 });
 
-const port = process.env.PORT || 3000;
 mongoose
   .connect(mongoClient)
   .then(() => {
-    app.listen(port);
-    console.log(`Express application listening on port ${port}`);
+    app.listen(3000);
+    console.log('Express application listening on port 3000');
   })
   .catch((err) => console.log(err));

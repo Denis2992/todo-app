@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: denis2992/todo-react:2
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: '512Mi'
+              cpu: '0.5'
+          env:
+            - name: NX_API_URL
+              value: 'backend-service'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 80
+  type: LoadBalancer

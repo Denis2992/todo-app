@@ -9,6 +9,8 @@ import { ThemeContext } from '@todo-react/shared/data-access';
 export function TodoMain() {
   const { theme } = useContext(ThemeContext);
 
+  console.log(process.env);
+
   return (
     <div className={classNames(styles.todo, styles[`todo--${theme}`])}>
       <div className={styles['todo-content']}>
