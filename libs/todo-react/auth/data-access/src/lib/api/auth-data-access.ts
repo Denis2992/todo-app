@@ -7,7 +7,7 @@ import { LoginPayload, SignupPayload } from '@todo-app/shared/domain';
 export async function loginUser(
   payload: LoginPayload
 ): Promise<LoginSuccessPayload> {
-  const res = await fetch('api/auth/login', {
+  const res = await fetch(`${process.env.NX_API_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

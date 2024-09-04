@@ -1,0 +1,14 @@
+services:
+  backend:
+    build:
+      dockerfile: ./apps/todo-api/Dockerfile
+    ports:
+      - '3000:3000'
+
+  frontend:
+    build:
+      dockerfile: ./apps/todo-react/Dockerfile
+    ports:
+      - '4000:80'
+    depends_on:
+      - backend

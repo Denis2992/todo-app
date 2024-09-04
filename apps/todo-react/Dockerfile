@@ -3,8 +3,9 @@
 # Build the docker image with `npx nx docker-build todo-react`.
 # Tip: Modify "docker-build" options in project.json to change docker build args.
 #
-# Run the container with `docker run -p 3000:3000 -t todo-react`.
+# Run the container with `docker run -p 4000:80 -t todo-react`.
 FROM docker.io/node:lts-alpine
+
 
 WORKDIR /app
 
@@ -15,6 +16,7 @@ RUN npm install --omit=dev
 FROM nginx:alpine
 
 COPY /dist/apps/todo-react /usr/share/nginx/html
+COPY /apps/todo-react/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

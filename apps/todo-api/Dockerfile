@@ -6,8 +6,8 @@
 # Run the container with `docker run -p 3000:3000 -t todo-api`.
 FROM docker.io/node:lts-alpine
 
-ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV MONGO_USER=Denis299
+ENV MONGO_PASSWORD=fWglYTNTmSwNEpBk
 
 WORKDIR /app
 
