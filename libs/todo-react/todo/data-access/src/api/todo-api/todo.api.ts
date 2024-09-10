@@ -3,7 +3,7 @@ import { Todo } from '@todo-app/shared/domain';
 export async function getTodos(
   token: string | null
 ): Promise<{ message: string; todos: Todo[] }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo`, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/todo`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -22,7 +22,7 @@ export async function addTodo(
   title: string,
   token: string | null
 ): Promise<{ message: string; todo: Todo }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo`, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/todo`, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + token,
@@ -41,7 +41,7 @@ export async function addManyTodos(
   token: string | null,
   todos: Todo[]
 ): Promise<{ message: string; todos: Todo[] }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo/add-many`, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/todo/add-many`, {
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + token,
@@ -61,7 +61,7 @@ export async function updateTodoStatus(
   id: string,
   token: string | null
 ): Promise<{ message: string }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo/` + id, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/todo/` + id, {
     method: 'PUT',
     headers: {
       Authorization: 'Bearer ' + token,
@@ -80,14 +80,17 @@ export async function updateTodosOrder(
   token: string | null,
   todos: Todo[]
 ): Promise<{ message: string }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo/update-order`, {
-    method: 'PUT',
-    headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ todos }),
-  });
+  const res = await fetch(
+    `${process.env.NX_PUBLIC_API_URL}/todo/update-order`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ todos }),
+    }
+  );
 
   if (res.status !== 200) {
     throw new Error('Saving todos order failed!');
@@ -100,7 +103,7 @@ export async function deleteTodo(
   id: string,
   token: string | null
 ): Promise<{ message: string; todoId: string }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo/` + id, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/todo/` + id, {
     method: 'DELETE',
     headers: {
       Authorization: 'Bearer ' + token,
@@ -117,12 +120,15 @@ export async function deleteTodo(
 export async function deleteCompletedTodos(
   token: string | null
 ): Promise<{ message: string }> {
-  const res = await fetch(`${process.env.NX_API_URL}/todo/delete-completed`, {
-    method: 'delete',
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NX_PUBLIC_API_URL}/todo/delete-completed`,
+    {
+      method: 'delete',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }
+  );
 
   if (res.status !== 200) {
     throw new Error('Deleting completed todos failed!');

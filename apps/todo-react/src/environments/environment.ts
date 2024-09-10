@@ -4,4 +4,5 @@
 export const environment = {
   production: false,
   port: 3000,
+  NX_API_URL: 'test',
 };

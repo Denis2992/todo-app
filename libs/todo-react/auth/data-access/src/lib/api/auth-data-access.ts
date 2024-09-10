@@ -7,7 +7,7 @@ import { LoginPayload, SignupPayload } from '@todo-app/shared/domain';
 export async function loginUser(
   payload: LoginPayload
 ): Promise<LoginSuccessPayload> {
-  const res = await fetch(`${process.env.NX_API_URL}/auth/login`, {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export async function loginUser(
 export async function signupUser(
   payload: SignupPayload
 ): Promise<SignupSuccessPayload> {
-  const res = await fetch('api/auth/signup', {
+  const res = await fetch(`${process.env.NX_PUBLIC_API_URL}/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

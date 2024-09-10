@@ -6,7 +6,7 @@ import { todoRouter } from '@todo-api/todo';
 import { authRouter } from '@todo-api/auth';
 import { ApiError } from '@todo-api/shared/domain';
 
-const mongoClient = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.nqp4t2b.mongodb.net/todo-app?retryWrites=true&w=majority`;
+const mongoClient = `mongodb+srv://${process.env.NX_PUBLIC_MONGO_USER}:${process.env.NX_PUBLIC_MONGO_PASSWORD}@cluster0.nqp4t2b.mongodb.net/todo-app?retryWrites=true&w=majority`;
 
 export const app = express();
 
